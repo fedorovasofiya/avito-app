@@ -21,6 +21,7 @@ final class ListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = Strings.title
         view.backgroundColor = .systemBackground
         setupCollectionView()
     }
@@ -85,6 +86,11 @@ extension ListViewController: UICollectionViewDataSource {
 
 extension ListViewController: UICollectionViewDelegate {
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let viewController = DetailsViewController()
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -100,6 +106,21 @@ extension ListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         .init(top: Constants.margin, left: Constants.margin, bottom: Constants.margin, right: Constants.margin)
+    }
+
+}
+
+// MARK: - Constants, Strings
+
+extension ListViewController {
+
+    private struct Constants {
+        static let margin: CGFloat = 10
+        static let cellHeight: CGFloat = 290
+    }
+
+    private struct Strings {
+        static let title: String = "Список товаров"
     }
 
 }

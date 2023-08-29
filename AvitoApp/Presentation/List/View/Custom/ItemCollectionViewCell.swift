@@ -131,3 +131,20 @@ extension ItemCollectionViewCell: Configurable {
         createdDateLabel.text = model.createdDate
     }
 }
+
+// MARK: - Constants and Fonts
+
+extension ItemCollectionViewCell {
+
+    private struct Constants {
+        static let smallMargin: CGFloat = 4
+        static let cornerRadius: CGFloat = 6
+    }
+
+    private struct Fonts {
+        static let regular: UIFont = .systemFont(ofSize: 16)
+        static let bold: UIFont = .boldSystemFont(ofSize: 16)
+        static let minor: UIFont = .systemFont(ofSize: 13)
+    }
+
+}
