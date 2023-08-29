@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EBF4B3532A9E71A100E15F1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3522A9E71A100E15F1A /* AppDelegate.swift */; };
-		EBF4B3552A9E71A100E15F1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3542A9E71A100E15F1A /* SceneDelegate.swift */; };
 		EBF4B3572A9E71A100E15F1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3562A9E71A100E15F1A /* ViewController.swift */; };
-		EBF4B35A2A9E71A100E15F1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBF4B3582A9E71A100E15F1A /* Main.storyboard */; };
 		EBF4B35C2A9E71A200E15F1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBF4B35B2A9E71A200E15F1A /* Assets.xcassets */; };
 		EBF4B35F2A9E71A200E15F1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBF4B35D2A9E71A200E15F1A /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -18,9 +16,7 @@
 /* Begin PBXFileReference section */
 		EBF4B34F2A9E71A100E15F1A /* AvitoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvitoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF4B3522A9E71A100E15F1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EBF4B3542A9E71A100E15F1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		EBF4B3562A9E71A100E15F1A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		EBF4B3592A9E71A100E15F1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EBF4B35B2A9E71A200E15F1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBF4B35E2A9E71A200E15F1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EBF4B3602A9E71A200E15F1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,15 +52,37 @@
 		EBF4B3512A9E71A100E15F1A /* AvitoApp */ = {
 			isa = PBXGroup;
 			children = (
-				EBF4B3522A9E71A100E15F1A /* AppDelegate.swift */,
-				EBF4B3542A9E71A100E15F1A /* SceneDelegate.swift */,
-				EBF4B3562A9E71A100E15F1A /* ViewController.swift */,
-				EBF4B3582A9E71A100E15F1A /* Main.storyboard */,
+				EBF4B3672A9E732400E15F1A /* Application */,
+				EBF4B3682A9E745500E15F1A /* Presentation */,
+			);
+			path = AvitoApp;
+			sourceTree = "<group>";
+		};
+		EBF4B3662A9E730F00E15F1A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				EBF4B35B2A9E71A200E15F1A /* Assets.xcassets */,
 				EBF4B35D2A9E71A200E15F1A /* LaunchScreen.storyboard */,
 				EBF4B3602A9E71A200E15F1A /* Info.plist */,
 			);
-			path = AvitoApp;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EBF4B3672A9E732400E15F1A /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				EBF4B3522A9E71A100E15F1A /* AppDelegate.swift */,
+				EBF4B3662A9E730F00E15F1A /* Resources */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		EBF4B3682A9E745500E15F1A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				EBF4B3562A9E71A100E15F1A /* ViewController.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +145,6 @@
 			files = (
 				EBF4B35F2A9E71A200E15F1A /* LaunchScreen.storyboard in Resources */,
 				EBF4B35C2A9E71A200E15F1A /* Assets.xcassets in Resources */,
-				EBF4B35A2A9E71A100E15F1A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,21 +157,12 @@
 			files = (
 				EBF4B3572A9E71A100E15F1A /* ViewController.swift in Sources */,
 				EBF4B3532A9E71A100E15F1A /* AppDelegate.swift in Sources */,
-				EBF4B3552A9E71A100E15F1A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		EBF4B3582A9E71A100E15F1A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EBF4B3592A9E71A100E15F1A /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		EBF4B35D2A9E71A200E15F1A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -292,7 +300,6 @@
 				INFOPLIST_FILE = AvitoApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -324,7 +331,6 @@
 				INFOPLIST_FILE = AvitoApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
