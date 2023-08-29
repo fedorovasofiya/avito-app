@@ -8,18 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		EBF4B3532A9E71A100E15F1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3522A9E71A100E15F1A /* AppDelegate.swift */; };
-		EBF4B3572A9E71A100E15F1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3562A9E71A100E15F1A /* ViewController.swift */; };
+		EBF4B3572A9E71A100E15F1A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3562A9E71A100E15F1A /* ListViewController.swift */; };
 		EBF4B35C2A9E71A200E15F1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBF4B35B2A9E71A200E15F1A /* Assets.xcassets */; };
 		EBF4B35F2A9E71A200E15F1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EBF4B35D2A9E71A200E15F1A /* LaunchScreen.storyboard */; };
+		EBF4B36D2A9E75AC00E15F1A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B36C2A9E75AC00E15F1A /* Constants.swift */; };
+		EBF4B3702A9E762700E15F1A /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B36F2A9E762700E15F1A /* ItemCollectionViewCell.swift */; };
+		EBF4B3732A9E770A00E15F1A /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3722A9E770900E15F1A /* Configurable.swift */; };
+		EBF4B3752A9E772B00E15F1A /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3742A9E772B00E15F1A /* Reusable.swift */; };
+		EBF4B3782A9E793000E15F1A /* UICollectionViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3772A9E793000E15F1A /* UICollectionViewCell+Extensions.swift */; };
+		EBF4B37A2A9E8AAC00E15F1A /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3792A9E8AAB00E15F1A /* Fonts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EBF4B34F2A9E71A100E15F1A /* AvitoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvitoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF4B3522A9E71A100E15F1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EBF4B3562A9E71A100E15F1A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EBF4B3562A9E71A100E15F1A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		EBF4B35B2A9E71A200E15F1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBF4B35E2A9E71A200E15F1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EBF4B3602A9E71A200E15F1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBF4B36C2A9E75AC00E15F1A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EBF4B36F2A9E762700E15F1A /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		EBF4B3722A9E770900E15F1A /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
+		EBF4B3742A9E772B00E15F1A /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		EBF4B3772A9E793000E15F1A /* UICollectionViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extensions.swift"; sourceTree = "<group>"; };
+		EBF4B3792A9E8AAB00E15F1A /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,9 +92,63 @@
 		EBF4B3682A9E745500E15F1A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				EBF4B3562A9E71A100E15F1A /* ViewController.swift */,
+				EBF4B36B2A9E759C00E15F1A /* Common */,
+				EBF4B3692A9E74C200E15F1A /* List */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		EBF4B3692A9E74C200E15F1A /* List */ = {
+			isa = PBXGroup;
+			children = (
+				EBF4B36E2A9E75F100E15F1A /* View */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		EBF4B36B2A9E759C00E15F1A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				EBF4B3762A9E790D00E15F1A /* Extensions */,
+				EBF4B3712A9E76D100E15F1A /* Protocols */,
+				EBF4B36C2A9E75AC00E15F1A /* Constants.swift */,
+				EBF4B3792A9E8AAB00E15F1A /* Fonts.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		EBF4B36E2A9E75F100E15F1A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EBF4B37B2A9E8CCE00E15F1A /* Custom */,
+				EBF4B3562A9E71A100E15F1A /* ListViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EBF4B3712A9E76D100E15F1A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				EBF4B3722A9E770900E15F1A /* Configurable.swift */,
+				EBF4B3742A9E772B00E15F1A /* Reusable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		EBF4B3762A9E790D00E15F1A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EBF4B3772A9E793000E15F1A /* UICollectionViewCell+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EBF4B37B2A9E8CCE00E15F1A /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				EBF4B36F2A9E762700E15F1A /* ItemCollectionViewCell.swift */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,8 +221,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBF4B3572A9E71A100E15F1A /* ViewController.swift in Sources */,
+				EBF4B37A2A9E8AAC00E15F1A /* Fonts.swift in Sources */,
+				EBF4B3752A9E772B00E15F1A /* Reusable.swift in Sources */,
+				EBF4B3782A9E793000E15F1A /* UICollectionViewCell+Extensions.swift in Sources */,
+				EBF4B3732A9E770A00E15F1A /* Configurable.swift in Sources */,
+				EBF4B3572A9E71A100E15F1A /* ListViewController.swift in Sources */,
+				EBF4B3702A9E762700E15F1A /* ItemCollectionViewCell.swift in Sources */,
 				EBF4B3532A9E71A100E15F1A /* AppDelegate.swift in Sources */,
+				EBF4B36D2A9E75AC00E15F1A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
