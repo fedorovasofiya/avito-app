@@ -46,4 +46,19 @@ final class ListViewModelImpl: ListViewModel {
         }
     }
 
+    func fetchImage(for index: Int, completion: @escaping (Data) -> Void) -> URLSessionDownloadTask? {
+        guard data.indices.contains(index) else { return nil }
+
+        return networkService.getImageData(by: data[index].imageURL) { result in
+            switch result {
+            case .failure(let error):
+                if let errorOccurred = self.errorOccurred {
+                    errorOccurred(error.localizedDescription)
+                }
+            case .success(let data):
+                completion(data)
+            }
+        }
+    }
+
 }

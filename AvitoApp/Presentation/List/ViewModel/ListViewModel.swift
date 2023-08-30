@@ -13,4 +13,5 @@ protocol ListViewModel {
     func getCount() -> Int
     func getItem(for index: Int) -> AdItem?
     func loadData()
+    func fetchImage(for index: Int, completion: @escaping (Data) -> Void) -> URLSessionDownloadTask?
 }

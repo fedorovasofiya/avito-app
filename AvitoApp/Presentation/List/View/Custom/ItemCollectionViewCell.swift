@@ -9,20 +9,14 @@ import UIKit
 
 final class ItemCollectionViewCell: UICollectionViewCell {
 
-    struct DisplayData {
-        let id: String
-        let image: UIImage?
-        let title: String
-        let price: String
-        let location: String
-        let createdDate: String
-    }
-
     private lazy var imageView = UIImageView()
     private lazy var titleLabel = UILabel()
     private lazy var priceLabel = UILabel()
     private lazy var locationLabel = UILabel()
     private lazy var createdDateLabel = UILabel()
+    private lazy var activityIndicatorView = UIActivityIndicatorView(style: .large)
+
+    private var downloadTask: URLSessionDownloadTask?
 
     // MARK: - Lifecycle
 
@@ -33,6 +27,7 @@ final class ItemCollectionViewCell: UICollectionViewCell {
         setupPriceLabel()
         setupLocationLabel()
         setupCreatedDateLabel()
+        setupActivityIndicatorView()
     }
 
     required init?(coder: NSCoder) {
@@ -41,6 +36,8 @@ final class ItemCollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        downloadTask?.cancel()
+        downloadTask = nil
         imageView.image = nil
         titleLabel.text = nil
         priceLabel.text = nil
@@ -118,18 +115,36 @@ final class ItemCollectionViewCell: UICollectionViewCell {
         ])
     }
 
+    private func setupActivityIndicatorView() {
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.addSubview(activityIndicatorView)
+
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
+        ])
+    }
+
 }
 
 // MARK: - Configurable
 
-extension ItemCollectionViewCell: Configurable {
-    func configure(with model: DisplayData) {
-        imageView.image = model.image
-        titleLabel.text = model.title
-        priceLabel.text = model.price
-        locationLabel.text = model.location
-        createdDateLabel.text = model.createdDate
+extension ItemCollectionViewCell {
+
+    func configure(with model: AdItem?, and downloadTask: URLSessionDownloadTask?) {
+        titleLabel.text = model?.title
+        priceLabel.text = model?.price
+        locationLabel.text = model?.location
+        createdDateLabel.text = model?.createdDate
+        activityIndicatorView.startAnimating()
+        self.downloadTask = downloadTask
     }
+
+    func configure(with image: UIImage?) {
+        activityIndicatorView.stopAnimating()
+        imageView.image = image
+    }
+
 }
 
 // MARK: - Constants and Fonts

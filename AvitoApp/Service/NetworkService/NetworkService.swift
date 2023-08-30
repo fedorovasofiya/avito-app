@@ -10,4 +10,5 @@ import Foundation
 protocol NetworkService {
     func loadAdvertisementsList() async throws -> [AdItem]
     func getDetails(id: String) async throws -> AdItem
+    func getImageData(by urlString: String, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionDownloadTask?
 }

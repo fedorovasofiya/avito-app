@@ -55,6 +55,30 @@ final class NetworkServiceImpl: NetworkService {
         )
     }
 
+    func getImageData(by urlString: String, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionDownloadTask? {
+        guard let url = URL(string: urlString) else {
+            completion(.failure(RequestError.invalidURLString(urlString)))
+            return nil
+        }
+
+        let downloadTask = urlSession.downloadTask(with: url) { url, _, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let url,
+                  let data = try? Data(contentsOf: url)
+            else {
+                completion(.failure(RequestError.noData))
+                return
+            }
+            completion(.success(data))
+        }
+
+        downloadTask.resume()
+        return downloadTask
+    }
+
     // MARK: - Private Methods
 
     private func makeURL(path: String) throws -> URL {

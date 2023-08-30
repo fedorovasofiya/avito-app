@@ -93,22 +93,15 @@ extension ListViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
+        let downloadTask = self.viewModel.fetchImage(for: indexPath.row) { data in
+            let image = UIImage(data: data)
+            DispatchQueue.main.async {
+                cell.configure(with: image)
+            }
+        }
         let item = viewModel.getItem(for: indexPath.row)
 
-        // TODO
-        if let item = item {
-            let data = ItemCollectionViewCell.DisplayData(
-                id: item.id,
-                image: UIImage(named: "TestImage"),
-                title: item.title,
-                price: item.price,
-                location: item.location,
-                createdDate: item.createdDate
-            )
-
-            cell.configure(with: data)
-        }
-
+        cell.configure(with: item, and: downloadTask)
         return cell
     }
 
