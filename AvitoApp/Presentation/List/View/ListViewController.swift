@@ -69,6 +69,9 @@ final class ListViewController: UIViewController {
                 self?.collectionView.reloadData()
             }
         }
+        viewModel.detailsTapped = { [weak self] viewController in
+            self?.navigationController?.pushViewController(viewController, animated: true)
+        }
         viewModel.errorOccurred = { error in
             print(error) // TODO
         }
@@ -93,8 +96,7 @@ extension ListViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
-        let downloadTask = self.viewModel.fetchImage(for: indexPath.row) { data in
-            let image = UIImage(data: data)
+        let downloadTask = self.viewModel.fetchImage(for: indexPath.row) { image in
             DispatchQueue.main.async {
                 cell.configure(with: image)
             }
@@ -112,8 +114,7 @@ extension ListViewController: UICollectionViewDataSource {
 extension ListViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewController = DetailsViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        viewModel.didTapItem(with: indexPath.row)
     }
 
 }

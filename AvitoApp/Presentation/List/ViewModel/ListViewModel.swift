@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ListViewModel {
     var listLoaded: (() -> Void)? { get set }
+    var detailsTapped: ((UIViewController) -> Void)? { get set }
     var errorOccurred: ((String) -> Void)? { get set }
     func getCount() -> Int
     func getItem(for index: Int) -> AdItem?
     func loadData()
-    func fetchImage(for index: Int, completion: @escaping (Data) -> Void) -> URLSessionDownloadTask?
+    func fetchImage(for index: Int, completion: @escaping (UIImage?) -> Void) -> URLSessionDownloadTask?
+    func didTapItem(with index: Int)
 }

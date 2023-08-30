@@ -23,8 +23,20 @@ final class DetailsViewController: UIViewController {
     private lazy var phoneLabel = UILabel()
     private lazy var idLabel = UILabel()
     private lazy var createdDateLabel = UILabel()
+    private lazy var activityIndicatorView = UIActivityIndicatorView(style: .large)
+
+    private var viewModel: DetailsViewModel
 
     // MARK: - Lifecycle
+
+    init(viewModel: DetailsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,17 +55,10 @@ final class DetailsViewController: UIViewController {
         setupPhoneLabel()
         setupIDLabel()
         setupCreatedDateLabel()
+        setupActivityIndicatorView()
 
-        imageView.image = UIImage(named: "TestImage")
-        titleLabel.text = "Кресло-качалка"
-        priceLabel.text = "3000 ₽"
-        locationLabel.text = "Воронеж"
-        createdDateLabel.text = "27 августа"
-        descriptionLabel.text = "Удобное кресло для отдыха."
-        emailLabel.text = "example30@example.com"
-        phoneLabel.text = "+7 (901) 234-5678"
-        addressLabel.text = "ул. Кресловая, д. 30"
-        idLabel.text = Strings.idPrefix + "1"
+        bindViewModel()
+        viewModel.loadData()
     }
 
     // MARK: - UI Setup
@@ -238,6 +243,44 @@ final class DetailsViewController: UIViewController {
             createdDateLabel.topAnchor.constraint(equalTo: idLabel.bottomAnchor),
             createdDateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Constants.bigMargin)
         ])
+    }
+
+    private func setupActivityIndicatorView() {
+        activityIndicatorView.startAnimating()
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.addSubview(activityIndicatorView)
+
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
+        ])
+    }
+
+    // MARK: - Binding
+
+    private func bindViewModel() {
+        viewModel.dataLoaded = { [weak self] item in
+            DispatchQueue.main.async {
+                self?.titleLabel.text = item.title
+                self?.priceLabel.text = item.price
+                self?.locationLabel.text = item.location
+                self?.createdDateLabel.text = item.createdDate
+                self?.descriptionLabel.text = item.description
+                self?.emailLabel.text = item.email
+                self?.phoneLabel.text = item.phoneNumber
+                self?.addressLabel.text = item.address
+                self?.idLabel.text = Strings.idPrefix + item.id
+            }
+            self?.viewModel.fetchImage(completion: { image in
+                DispatchQueue.main.async {
+                    self?.activityIndicatorView.stopAnimating()
+                    self?.imageView.image = image
+                }
+            })
+        }
+        viewModel.errorOccurred = { error in
+            print(error) // TODO
+        }
     }
 
 }

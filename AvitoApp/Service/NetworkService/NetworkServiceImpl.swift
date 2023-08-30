@@ -55,6 +55,7 @@ final class NetworkServiceImpl: NetworkService {
         )
     }
 
+    @discardableResult
     func getImageData(by urlString: String, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionDownloadTask? {
         guard let url = URL(string: urlString) else {
             completion(.failure(RequestError.invalidURLString(urlString)))
@@ -116,7 +117,7 @@ final class NetworkServiceImpl: NetworkService {
         case 400:
             throw RequestError.badRequest
         case 401:
-            throw RequestError.wrongAuth
+            throw RequestError.wrongAuth // TODO
         case 404:
             throw RequestError.notFound
         case 500 ... 599:

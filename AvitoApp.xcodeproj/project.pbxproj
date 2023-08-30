@@ -23,6 +23,8 @@
 		EBF4B3922A9F7FBB00E15F1A /* AdItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3912A9F7FBB00E15F1A /* AdItem.swift */; };
 		EBF4B3952A9F830000E15F1A /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3942A9F830000E15F1A /* ListViewModel.swift */; };
 		EBF4B3972A9F830D00E15F1A /* ListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3962A9F830D00E15F1A /* ListViewModelImpl.swift */; };
+		EBF4B39C2A9FFFB300E15F1A /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B39B2A9FFFB300E15F1A /* DetailsViewModel.swift */; };
+		EBF4B39E2A9FFFBE00E15F1A /* DetailsViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B39D2A9FFFBE00E15F1A /* DetailsViewModelImpl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		EBF4B3912A9F7FBB00E15F1A /* AdItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdItem.swift; sourceTree = "<group>"; };
 		EBF4B3942A9F830000E15F1A /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		EBF4B3962A9F830D00E15F1A /* ListViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModelImpl.swift; sourceTree = "<group>"; };
+		EBF4B39B2A9FFFB300E15F1A /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
+		EBF4B39D2A9FFFBE00E15F1A /* DetailsViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModelImpl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				EBF4B37D2A9E8F1500E15F1A /* View */,
+				EBF4B39A2A9FFFA200E15F1A /* ViewModel */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -229,6 +234,15 @@
 			children = (
 				EBF4B3942A9F830000E15F1A /* ListViewModel.swift */,
 				EBF4B3962A9F830D00E15F1A /* ListViewModelImpl.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		EBF4B39A2A9FFFA200E15F1A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EBF4B39B2A9FFFB300E15F1A /* DetailsViewModel.swift */,
+				EBF4B39D2A9FFFBE00E15F1A /* DetailsViewModelImpl.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -305,12 +319,14 @@
 			files = (
 				EBF4B3752A9E772B00E15F1A /* Reusable.swift in Sources */,
 				EBF4B37F2A9E8F3300E15F1A /* DetailsViewController.swift in Sources */,
+				EBF4B39C2A9FFFB300E15F1A /* DetailsViewModel.swift in Sources */,
 				EBF4B3952A9F830000E15F1A /* ListViewModel.swift in Sources */,
 				EBF4B3832A9F78B700E15F1A /* NetworkService.swift in Sources */,
 				EBF4B3782A9E793000E15F1A /* UICollectionViewCell+Extensions.swift in Sources */,
 				EBF4B3852A9F78C600E15F1A /* NetworkServiceImpl.swift in Sources */,
 				EBF4B3972A9F830D00E15F1A /* ListViewModelImpl.swift in Sources */,
 				EBF4B38B2A9F797200E15F1A /* ListDTO.swift in Sources */,
+				EBF4B39E2A9FFFBE00E15F1A /* DetailsViewModelImpl.swift in Sources */,
 				EBF4B3882A9F791B00E15F1A /* RequestError.swift in Sources */,
 				EBF4B3572A9E71A100E15F1A /* ListViewController.swift in Sources */,
 				EBF4B3702A9E762700E15F1A /* ItemCollectionViewCell.swift in Sources */,

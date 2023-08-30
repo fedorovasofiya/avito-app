@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
 final class ListViewModelImpl: ListViewModel {
 
     var listLoaded: (() -> Void)?
     var errorOccurred: ((String) -> Void)?
+    var detailsTapped: ((UIViewController) -> Void)?
 
     private let networkService: NetworkService
     private var data: [AdItem] = []
@@ -46,7 +48,7 @@ final class ListViewModelImpl: ListViewModel {
         }
     }
 
-    func fetchImage(for index: Int, completion: @escaping (Data) -> Void) -> URLSessionDownloadTask? {
+    func fetchImage(for index: Int, completion: @escaping (UIImage?) -> Void) -> URLSessionDownloadTask? {
         guard data.indices.contains(index) else { return nil }
 
         return networkService.getImageData(by: data[index].imageURL) { result in
@@ -56,9 +58,18 @@ final class ListViewModelImpl: ListViewModel {
                     errorOccurred(error.localizedDescription)
                 }
             case .success(let data):
-                completion(data)
+                completion(UIImage(data: data))
             }
         }
     }
 
+    func didTapItem(with index: Int) {
+        guard data.indices.contains(index) else { return }
+        if let detailsTapped = detailsTapped {
+            let viewModel = DetailsViewModelImpl(itemID: data[index].id, networkService: networkService)
+            let viewControllerToDisplay = DetailsViewController(viewModel: viewModel)
+            detailsTapped(viewControllerToDisplay)
+        }
+    }
+    
 }
