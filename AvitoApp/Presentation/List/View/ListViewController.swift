@@ -17,13 +17,27 @@ final class ListViewController: UIViewController {
         return collectionView
     }()
 
+    private var viewModel: ListViewModel
+
     // MARK: - Lifecycle
+
+    init(viewModel: ListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = Strings.title
         view.backgroundColor = .systemBackground
         setupCollectionView()
+
+        bindViewModel()
+        viewModel.loadData()
     }
 
     // MARK: - UI Setup
@@ -47,6 +61,19 @@ final class ListViewController: UIViewController {
         ])
     }
 
+    // MARK: - Binding
+
+    private func bindViewModel() {
+        viewModel.listLoaded = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        viewModel.errorOccurred = { error in
+            print(error) // TODO
+        }
+    }
+
 }
 
 // MARK: - UICollectionViewDataSource
@@ -54,7 +81,7 @@ final class ListViewController: UIViewController {
 extension ListViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        30 // TODO
+        viewModel.getCount()
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -66,16 +93,21 @@ extension ListViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
-        let data = ItemCollectionViewCell.DisplayData(
-            id: "1",
-            image: UIImage(named: "TestImage"),
-            title: "Смартфон Apple iPhone 12",
-            price: "55000 ₽",
-            location: "Москва",
-            createdDate: "27 августа"
-        )
+        let item = viewModel.getItem(for: indexPath.row)
 
-        cell.configure(with: data)
+        // TODO
+        if let item = item {
+            let data = ItemCollectionViewCell.DisplayData(
+                id: item.id,
+                image: UIImage(named: "TestImage"),
+                title: item.title,
+                price: item.price,
+                location: item.location,
+                createdDate: item.createdDate
+            )
+
+            cell.configure(with: data)
+        }
 
         return cell
     }
