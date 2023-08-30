@@ -46,6 +46,22 @@ struct AdItem {
 
 extension AdItem {
     static func formatDate(from string: String) -> String {
-        return string
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from: string)
+
+        guard let date = date else { return "Дата не определена" }
+
+        let calendar = Calendar.current
+        if !(calendar.isDate(date, equalTo: Date(), toGranularity: .year)) {
+            dateFormatter.setLocalizedDateFormatFromTemplate("d MMMM yyyy")
+        } else if !(calendar.isDateInToday(date)) {
+            dateFormatter.setLocalizedDateFormatFromTemplate("d MMMM")
+        } else {
+            return "Сегодня"
+        }
+
+        return dateFormatter.string(from: date)
     }
 }
