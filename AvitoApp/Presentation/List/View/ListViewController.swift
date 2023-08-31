@@ -28,8 +28,9 @@ final class ListViewController: UIViewController {
                 case .data:
                     self.activityIndicatorView.stopAnimating()
                     self.collectionView.reloadData()
-                case .error:
+                case .error(let message):
                     self.activityIndicatorView.stopAnimating()
+                    self.presentAlert(with: message)
                 }
             }
         }
@@ -99,9 +100,17 @@ final class ListViewController: UIViewController {
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         viewModel.errorOccurred = { [weak self] error in
-            self?.state = .error
-            print(error) // TODO
+            self?.state = .error(error.localizedDescription)
         }
+    }
+
+    private func presentAlert(with message: String) {
+        let alertController = UIAlertController(title: Strings.alertErrorTitle, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: Strings.tryAgainAction, style: .default, handler: { [weak self] _ in
+            self?.state = .loading
+            self?.viewModel.loadData()
+        }))
+        self.present(alertController, animated: true)
     }
 
 }
@@ -174,6 +183,8 @@ extension ListViewController {
 
     private struct Strings {
         static let title: String = "Список товаров"
+        static let alertErrorTitle: String = "Что-то пошло не так..."
+        static let tryAgainAction: String = "Попробовать снова"
     }
 
 }

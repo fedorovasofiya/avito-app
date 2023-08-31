@@ -40,18 +40,24 @@ final class DetailsViewModelImpl: DetailsViewModel {
     }
 
     func fetchImage(completion: @escaping (UIImage?) -> Void) {
-        guard let url = data?.imageURL else { return }
+        guard let url = data?.imageURL else {
+            completion(getPlaceholderImage())
+            return
+        }
 
-        networkService.getImageData(by: url) { result in
+        networkService.getImageData(by: url) { [weak self] result in
             switch result {
-            case .failure(let error):
-                if let errorOccurred = self.errorOccurred {
-                    errorOccurred(error)
-                }
+            case .failure:
+                completion(self?.getPlaceholderImage())
             case .success(let data):
                 completion(UIImage(data: data))
             }
         }
+    }
+
+    private func getPlaceholderImage() -> UIImage? {
+        UIImage(systemName: "photo")?
+            .withTintColor(.lightGray, renderingMode: .alwaysOriginal)
     }
     
 }

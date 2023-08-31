@@ -11,7 +11,7 @@ import UIKit
 protocol ListViewModel {
     var listLoaded: (() -> Void)? { get set }
     var detailsTapped: ((UIViewController) -> Void)? { get set }
-    var errorOccurred: ((String) -> Void)? { get set }
+    var errorOccurred: ((Error) -> Void)? { get set }
     func getCount() -> Int
     func getItem(for index: Int) -> AdItem?
     func loadData()

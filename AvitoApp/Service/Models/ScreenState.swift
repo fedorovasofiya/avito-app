@@ -9,6 +9,6 @@ import Foundation
 
 enum ScreenState {
     case loading
-    case error
+    case error(String)
     case data
 }

@@ -58,7 +58,7 @@ final class NetworkServiceImpl: NetworkService {
     @discardableResult
     func getImageData(by urlString: String, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionDownloadTask? {
         guard let url = URL(string: urlString) else {
-            completion(.failure(RequestError.invalidURLString(urlString)))
+            completion(.failure(NetworkError.invalidURLString(urlString)))
             return nil
         }
 
@@ -70,7 +70,7 @@ final class NetworkServiceImpl: NetworkService {
             guard let url,
                   let data = try? Data(contentsOf: url)
             else {
-                completion(.failure(RequestError.noData))
+                completion(.failure(NetworkError.noData))
                 return
             }
             completion(.success(data))
@@ -89,7 +89,7 @@ final class NetworkServiceImpl: NetworkService {
         urlComponents.path = path
 
         guard let url = urlComponents.url else {
-            throw RequestError.wrongURL(urlComponents)
+            throw NetworkError.wrongURL(urlComponents)
         }
         return url
     }
@@ -104,7 +104,7 @@ final class NetworkServiceImpl: NetworkService {
     private func performRequest(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         let (data, response) = try await urlSession.data(for: request)
         guard let response = response as? HTTPURLResponse else {
-            throw RequestError.unexpectedResponse
+            throw NetworkError.unexpectedResponse
         }
         try handleStatusCode(response: response)
         return (data, response)
@@ -114,16 +114,14 @@ final class NetworkServiceImpl: NetworkService {
         switch response.statusCode {
         case 100 ... 299:
             return
-        case 400:
-            throw RequestError.badRequest
-        case 401:
-            throw RequestError.wrongAuth // TODO
-        case 404:
-            throw RequestError.notFound
+        case 300 ... 399:
+            throw NetworkError.redirect
+        case 400 ... 499:
+            throw NetworkError.badRequest
         case 500 ... 599:
-            throw RequestError.serverError
+            throw NetworkError.serverError
         default:
-            throw RequestError.unexpectedStatusCode(response.statusCode)
+            throw NetworkError.unexpectedStatusCode(response.statusCode)
         }
     }
 

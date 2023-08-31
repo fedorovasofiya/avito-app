@@ -11,7 +11,7 @@ import UIKit
 final class ListViewModelImpl: ListViewModel {
 
     var listLoaded: (() -> Void)?
-    var errorOccurred: ((String) -> Void)?
+    var errorOccurred: ((Error) -> Void)?
     var detailsTapped: ((UIViewController) -> Void)?
 
     private let networkService: NetworkService
@@ -42,20 +42,24 @@ final class ListViewModelImpl: ListViewModel {
                 }
             } catch {
                 if let errorOccurred = self.errorOccurred {
-                    errorOccurred(error.localizedDescription)
+                    errorOccurred(error)
                 }
             }
         }
     }
 
     func fetchImage(for index: Int, completion: @escaping (UIImage?) -> Void) -> URLSessionDownloadTask? {
-        guard data.indices.contains(index) else { return nil }
+        guard data.indices.contains(index) else {
+            completion(getPlaceholderImage())
+            return nil
+        }
 
-        return networkService.getImageData(by: data[index].imageURL) { result in
+        return networkService.getImageData(by: data[index].imageURL) { [weak self] result in
             switch result {
             case .failure(let error):
-                if let errorOccurred = self.errorOccurred {
-                    errorOccurred(error.localizedDescription)
+                if let error = error as? URLError,
+                   error.code != .cancelled {
+                    completion(self?.getPlaceholderImage())
                 }
             case .success(let data):
                 completion(UIImage(data: data))
@@ -64,12 +68,18 @@ final class ListViewModelImpl: ListViewModel {
     }
 
     func didTapItem(with index: Int) {
-        guard data.indices.contains(index) else { return }
-        if let detailsTapped = detailsTapped {
-            let viewModel = DetailsViewModelImpl(itemID: data[index].id, networkService: networkService)
-            let viewControllerToDisplay = DetailsViewController(viewModel: viewModel)
-            detailsTapped(viewControllerToDisplay)
-        }
+        guard data.indices.contains(index),
+              let detailsTapped = detailsTapped
+        else { return }
+
+        let viewModel = DetailsViewModelImpl(itemID: data[index].id, networkService: networkService)
+        let viewControllerToDisplay = DetailsViewController(viewModel: viewModel)
+        detailsTapped(viewControllerToDisplay)
+    }
+
+    private func getPlaceholderImage() -> UIImage? {
+        UIImage(systemName: "photo")?
+            .withTintColor(.lightGray, renderingMode: .alwaysOriginal)
     }
     
 }

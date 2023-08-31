@@ -38,9 +38,10 @@ final class DetailsViewController: UIViewController {
                 case .data:
                     self.activityIndicatorView.stopAnimating()
                     self.contentView.isHidden = false
-                case .error:
+                case .error(let message):
                     self.activityIndicatorView.stopAnimating()
                     self.contentView.isHidden = true
+                    self.presentAlert(with: message)
                 }
             }
         }
@@ -111,6 +112,7 @@ final class DetailsViewController: UIViewController {
 
     private func setupImageView() {
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
 
@@ -303,8 +305,8 @@ final class DetailsViewController: UIViewController {
             })
         }
 
-        viewModel.errorOccurred = { error in
-            print(error) // TODO
+        viewModel.errorOccurred = { [weak self] error in
+            self?.state = .error(error.localizedDescription)
         }
     }
 
@@ -318,6 +320,18 @@ final class DetailsViewController: UIViewController {
         phoneLabel.text = model.phoneNumber
         addressLabel.text = model.address
         idLabel.text = Strings.idPrefix + model.id
+    }
+
+    private func presentAlert(with message: String) {
+        let alertController = UIAlertController(title: Strings.alertErrorTitle, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: Strings.tryAgainAction, style: .cancel, handler: { [weak self] _ in
+            self?.state = .loading
+            self?.viewModel.loadData()
+        }))
+        alertController.addAction(UIAlertAction(title: Strings.backAction, style: .default, handler: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }))
+        self.present(alertController, animated: true)
     }
 
 }
@@ -342,6 +356,9 @@ extension DetailsViewController {
         static let descriptionHeader: String = "Описание"
         static let contactsHeader: String = "Контакты"
         static let idPrefix: String = "Объявление №"
+        static let alertErrorTitle: String = "Что-то пошло не так..."
+        static let tryAgainAction: String = "Попробовать снова"
+        static let backAction: String = "Назад"
     }
 
 }

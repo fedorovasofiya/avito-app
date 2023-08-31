@@ -1,5 +1,5 @@
 //
-//  RequestError.swift
+//  NetworkError.swift
 //  AvitoApp
 //
 //  Created by Sonya Fedorova on 30.08.2023.
@@ -7,31 +7,28 @@
 
 import Foundation
 
-enum RequestError: Error {
+enum NetworkError: Error {
     case wrongURL(URLComponents)
     case unexpectedResponse
+    case redirect
     case badRequest
-    case wrongAuth
-    case notFound
     case serverError
     case unexpectedStatusCode(Int)
     case noData
     case invalidURLString(String)
 }
 
-extension RequestError: LocalizedError {
+extension NetworkError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .wrongURL(let urlComponents):
             return "Could not construct url with components: \(urlComponents)"
         case .unexpectedResponse:
             return "Unexpected response from server"
+        case .redirect:
+            return "Redirect"
         case .badRequest:
-            return "Wrong request or unsynchronized data"
-        case .wrongAuth:
-            return "Wrong authorization"
-        case .notFound:
-            return "Element not found"
+            return "Wrong request"
         case .serverError:
             return "Server error"
         case .unexpectedStatusCode(let code):

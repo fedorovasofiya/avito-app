@@ -50,6 +50,7 @@ final class ItemCollectionViewCell: UICollectionViewCell {
     private func setupImageView() {
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = Constants.cornerRadius
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
 
