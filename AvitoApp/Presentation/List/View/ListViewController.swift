@@ -9,6 +9,7 @@ import UIKit
 
 final class ListViewController: UIViewController {
 
+    private lazy var activityIndicatorView = UIActivityIndicatorView(style: .large)
     private lazy var collectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = Constants.margin
@@ -18,6 +19,21 @@ final class ListViewController: UIViewController {
     }()
 
     private var viewModel: ListViewModel
+    private var state: ScreenState = .loading {
+        didSet {
+            DispatchQueue.main.async {
+                switch self.state {
+                case .loading:
+                    self.activityIndicatorView.startAnimating()
+                case .data:
+                    self.activityIndicatorView.stopAnimating()
+                    self.collectionView.reloadData()
+                case .error:
+                    self.activityIndicatorView.stopAnimating()
+                }
+            }
+        }
+    }
 
     // MARK: - Lifecycle
 
@@ -35,8 +51,10 @@ final class ListViewController: UIViewController {
         navigationItem.title = Strings.title
         view.backgroundColor = .systemBackground
         setupCollectionView()
+        setupActivityIndicatorView()
 
         bindViewModel()
+        state = .loading
         viewModel.loadData()
     }
 
@@ -61,18 +79,27 @@ final class ListViewController: UIViewController {
         ])
     }
 
+    private func setupActivityIndicatorView() {
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.addSubview(activityIndicatorView)
+
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor)
+        ])
+    }
+
     // MARK: - Binding
 
     private func bindViewModel() {
         viewModel.listLoaded = { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
+            self?.state = .data
         }
         viewModel.detailsTapped = { [weak self] viewController in
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
-        viewModel.errorOccurred = { error in
+        viewModel.errorOccurred = { [weak self] error in
+            self?.state = .error
             print(error) // TODO
         }
     }

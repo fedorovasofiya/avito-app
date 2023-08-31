@@ -23,9 +23,28 @@ final class DetailsViewController: UIViewController {
     private lazy var phoneLabel = UILabel()
     private lazy var idLabel = UILabel()
     private lazy var createdDateLabel = UILabel()
+    private lazy var imageLoadingActivityIndicatorView = UIActivityIndicatorView(style: .large)
     private lazy var activityIndicatorView = UIActivityIndicatorView(style: .large)
 
     private var viewModel: DetailsViewModel
+
+    private var state: ScreenState = .loading {
+        didSet {
+            DispatchQueue.main.async {
+                switch self.state {
+                case .loading:
+                    self.activityIndicatorView.startAnimating()
+                    self.contentView.isHidden = true
+                case .data:
+                    self.activityIndicatorView.stopAnimating()
+                    self.contentView.isHidden = false
+                case .error:
+                    self.activityIndicatorView.stopAnimating()
+                    self.contentView.isHidden = true
+                }
+            }
+        }
+    }
 
     // MARK: - Lifecycle
 
@@ -55,9 +74,11 @@ final class DetailsViewController: UIViewController {
         setupPhoneLabel()
         setupIDLabel()
         setupCreatedDateLabel()
+        setupImageLoadingActivityIndicatorView()
         setupActivityIndicatorView()
 
         bindViewModel()
+        state = .loading
         viewModel.loadData()
     }
 
@@ -245,42 +266,58 @@ final class DetailsViewController: UIViewController {
         ])
     }
 
-    private func setupActivityIndicatorView() {
-        activityIndicatorView.startAnimating()
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.addSubview(activityIndicatorView)
+    private func setupImageLoadingActivityIndicatorView() {
+        imageLoadingActivityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.addSubview(imageLoadingActivityIndicatorView)
 
         NSLayoutConstraint.activate([
-            activityIndicatorView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
-            activityIndicatorView.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
+            imageLoadingActivityIndicatorView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            imageLoadingActivityIndicatorView.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
+        ])
+    }
+
+    private func setupActivityIndicatorView() {
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicatorView)
+
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 
     // MARK: - Binding
 
     private func bindViewModel() {
-        viewModel.dataLoaded = { [weak self] item in
+        viewModel.dataLoaded = { [weak self] model in
             DispatchQueue.main.async {
-                self?.titleLabel.text = item.title
-                self?.priceLabel.text = item.price
-                self?.locationLabel.text = item.location
-                self?.createdDateLabel.text = item.createdDate
-                self?.descriptionLabel.text = item.description
-                self?.emailLabel.text = item.email
-                self?.phoneLabel.text = item.phoneNumber
-                self?.addressLabel.text = item.address
-                self?.idLabel.text = Strings.idPrefix + item.id
+                self?.setLabelsData(from: model)
+                self?.state = .data
+                self?.imageLoadingActivityIndicatorView.startAnimating()
             }
             self?.viewModel.fetchImage(completion: { image in
                 DispatchQueue.main.async {
-                    self?.activityIndicatorView.stopAnimating()
                     self?.imageView.image = image
+                    self?.imageLoadingActivityIndicatorView.stopAnimating()
                 }
             })
         }
+
         viewModel.errorOccurred = { error in
             print(error) // TODO
         }
+    }
+
+    private func setLabelsData(from model: AdItem) {
+        titleLabel.text = model.title
+        priceLabel.text = model.price
+        locationLabel.text = model.location
+        createdDateLabel.text = model.createdDate
+        descriptionLabel.text = model.description
+        emailLabel.text = model.email
+        phoneLabel.text = model.phoneNumber
+        addressLabel.text = model.address
+        idLabel.text = Strings.idPrefix + model.id
     }
 
 }

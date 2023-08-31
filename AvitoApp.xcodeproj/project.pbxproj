@@ -25,6 +25,7 @@
 		EBF4B3972A9F830D00E15F1A /* ListViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B3962A9F830D00E15F1A /* ListViewModelImpl.swift */; };
 		EBF4B39C2A9FFFB300E15F1A /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B39B2A9FFFB300E15F1A /* DetailsViewModel.swift */; };
 		EBF4B39E2A9FFFBE00E15F1A /* DetailsViewModelImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B39D2A9FFFBE00E15F1A /* DetailsViewModelImpl.swift */; };
+		EBF4B3A02AA07CBD00E15F1A /* ScreenState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF4B39F2AA07CBD00E15F1A /* ScreenState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		EBF4B3962A9F830D00E15F1A /* ListViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModelImpl.swift; sourceTree = "<group>"; };
 		EBF4B39B2A9FFFB300E15F1A /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		EBF4B39D2A9FFFBE00E15F1A /* DetailsViewModelImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModelImpl.swift; sourceTree = "<group>"; };
+		EBF4B39F2AA07CBD00E15F1A /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				EBF4B3912A9F7FBB00E15F1A /* AdItem.swift */,
+				EBF4B39F2AA07CBD00E15F1A /* ScreenState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				EBF4B3572A9E71A100E15F1A /* ListViewController.swift in Sources */,
 				EBF4B3702A9E762700E15F1A /* ItemCollectionViewCell.swift in Sources */,
 				EBF4B3532A9E71A100E15F1A /* AppDelegate.swift in Sources */,
+				EBF4B3A02AA07CBD00E15F1A /* ScreenState.swift in Sources */,
 				EBF4B38D2A9F798700E15F1A /* AdvertisementDTO.swift in Sources */,
 				EBF4B3922A9F7FBB00E15F1A /* AdItem.swift in Sources */,
 			);
